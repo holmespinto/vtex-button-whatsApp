@@ -1,86 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import PropTypes from 'prop-types'
-
-import styles from './styles.css'
-
-type types = {
-  companyName: string
-  textReplyTime: string
-  logo: string
-  width: number
-  height: number
-}
-/* ENCABEZADO */
-const Header = ({ companyName, textReplyTime, logo, height, width }: types) => {
-  return (
-    <div>
-      <div className={styles.logo}>
-        <img src={logo} height={height} width={width} alt="Logo de whatsapp" />
-      </div>
-      <div className={styles.texts}>
-        <span className={styles.texts_span}>{companyName}</span>
-        <span className={styles.texts_h1}>{textReplyTime}</span>
-      </div>
-    </div>
-  )
-}
-
-type typesSend = {
-  phoneNumber: string
-}
-/* boton enviar */
-const SendButton = ({ phoneNumber }: typesSend) => {
-  const [message, setMessage] = useState('')
-
-  const handleSend = () => {
-    if (!phoneNumber) {
-      window.alert('Invalid Phone Number')
-
-      return false
-    }
-
-    window.open(`https://wa.me/${phoneNumber}?text=${message}`)
-    setMessage('')
-
-    return true
-  }
-
-  // Creating a custom hook
-  function useInput() {
-    const [value, setValue] = useState(null)
-
-    function onChange(e: any) {
-      setValue(e.target.value)
-    }
-
-    return {
-      value,
-      onChange,
-    }
-  } // Creating a custom hook
-
-  const inputProps = useInput()
-
-  useEffect(() => {
-    if (!inputProps) {
-      setMessage(inputProps)
-    }
-  }, [inputProps])
-
-  return (
-    <div>
-      <input
-        // placeholder={placeholder}
-        className={styles.input}
-        // onChange={useInput}
-        value={message}
-      />
-      <button className={styles.button} onClick={handleSend}>
-        {'Enviar'}
-      </button>
-    </div>
-  )
-}
 
 type Props = {
   logo: string
@@ -100,23 +19,19 @@ const WhatsappButton = ({
   width,
   height,
 }: Props) => {
-  const time = new Date().toTimeString().split(`:`).slice(0, 2).join(`:`)
-
-  return (
-    <>
-      <div>
-        <Header
-          companyName={companyName}
-          textReplyTime={time}
-          width={width}
-          height={height}
-          logo={logo}
-        />
-
-        <SendButton phoneNumber={phone} />
+  //const time = new Date().toTimeString().split(`:`).slice(0, 2).join(`:`)
+console.log(width,height)
+  return <>
+      <div className="fixed buttom-2 left-2 flex flexColumn">
+      <a href={`https://wa.me/${phone}?text=${companyName}`}
+      target="_blank"
+      ref="noreferrer"
+      >
+        <img src={logo} alt="Google plus" width={width} height={height}/>
+      </a>
       </div>
     </>
-  )
+
 }
 
 WhatsappButton.propTypes = {
